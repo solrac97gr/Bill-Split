@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Router} from '@reach/router'
+import {Route} from './routes/Route'
+import router from './routes/index'
+/*Components */
+import {NavBar} from "./components/NavBarModule"
+/*Pages */
+import {Home} from './pages/Home'
+import {Edit} from './pages/Edit'
+import {Profile} from './pages/Profile'
+import {Add} from './pages/Add'
+/*Styles */
+import {GlobalStyle} from './styles/GlobalStyles'
+
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar></NavBar>
+      <Router>
+        <Route component={Home} path={router.home}/>
+        <Route component={Edit} path={router.edit}/>
+        <Route component={Profile} path={router.profile}/>
+        <Route component={Add} path={router.add}/>
+      </Router>
+      <GlobalStyle></GlobalStyle>
+    </>
   );
-}
+};
 
 export default App;
