@@ -9,6 +9,8 @@ import {Home} from './pages/Home'
 import {Edit} from './pages/Edit'
 import {Profile} from './pages/Profile'
 import {Add} from './pages/Add'
+import {Login} from './pages/Login'
+import {Register} from './pages/Register'
 /*Styles */
 import {GlobalStyle} from './styles/GlobalStyles'
 
@@ -22,6 +24,8 @@ const App: React.FC = () => {
         <Route component={Edit} path={router.edit}/>
         <Route component={Profile} path={router.profile}/>
         <Route component={Add} path={router.add}/>
+        <Route component={Login} path={router.login}/>
+        <Route component={Register} path={router.register}/>
       </Router>
       <GlobalStyle></GlobalStyle>
     </>

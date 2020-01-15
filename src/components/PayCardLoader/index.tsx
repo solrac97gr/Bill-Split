@@ -7,6 +7,7 @@ export const PayCardLoader:FC = () => {
             <TitleSkelet>Title</TitleSkelet>
             <Resumen>amount</Resumen>
             <Resumen>participants</Resumen>
+            <Resumen>participants</Resumen>
         </PayCardStyled>
     )
 }
