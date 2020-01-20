@@ -1,28 +1,37 @@
 import React, { FunctionComponent as FC } from "react";
 /* Styles */
-import { PayCard as PayCardStyled, Button, PayCardTitle } from "./styles";
+import {
+  PayCard as PayCardStyled,
+  Button,
+  PayCardTitle,
+  Amount,
+  AmountCant,
+  Date,
+  Content
+} from "./styles";
 /*Custom Hooks */
-import {useFormatDate} from '../../hooks/useFormatDate'
+import { useFormatDate } from "../../hooks/useFormatDate";
 /*Model */
-import {PayCardProps} from '../../models/models'
-
-
+import { PayCardProps } from "../../models/models";
 
 export const PayCard: FC<PayCardProps> = ({
   id,
   title,
   created_at,
   amount,
-  nparticipants
+  content
 }: PayCardProps) => {
-  const [date] = useFormatDate(created_at)
+  const [date_dmy] = useFormatDate(created_at);
   return (
-    <PayCardStyled>
-      <PayCardTitle>{title}</PayCardTitle>
-      <span>amount: ${amount}</span>
-      <span>participants: {nparticipants}</span>
-      <span>Date: {date}</span>
-      <Button to={`/edit/${id}`}>Edit</Button>
-    </PayCardStyled>
+    <Button to={`/edit/${id}`}>
+      <PayCardStyled>
+        <PayCardTitle>{title}</PayCardTitle>
+        <Content>{content}</Content>
+        <Date>{date_dmy}</Date>
+      </PayCardStyled>
+      <Amount>
+        <AmountCant>${amount}</AmountCant>
+      </Amount>
+    </Button>
   );
 };

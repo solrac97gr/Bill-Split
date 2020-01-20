@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
   body{
-    background-color:#F7F8FA;
+    background-color:white;
     overscroll-behavior: none;
     padding-bottom:50px;
   }

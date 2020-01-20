@@ -36,7 +36,7 @@ export const ListOfPayCard: FC<ListOfPayCardProps> = (
   const [pays, setPays] = useState(initialData);
   const [loading, setLoading] = useState(true);
   useEffect(function() {
-    fetch("http://localhost:8080/pays")
+    fetch("https://hip-informatics-265419.appspot.com/pays")
       .then((r) => r.json())
       .then((data) => {
         setPays(data);
