@@ -1,5 +1,14 @@
-import React, { useState, FormEvent, FunctionComponent as FC } from "react";
+import React, {
+  useState,
+  FormEvent,
+  FunctionComponent as FC,
+  
+} from "react";
+
 import { useInputValue } from "../../hooks/useInputValue";
+import { useParticipantsConstruc } from "../../hooks/useParticipantsConstruc";
+import {Member} from '../Member'
+
 import {
   Form,
   Title,
@@ -7,10 +16,15 @@ import {
   Input,
   Button,
   FloattingLogo,
-  Error
+  Error,
 } from "./styles";
 
 export const PayForm: FC = () => {
+  type Participant = {
+    id: number;
+    partofpayment: number;
+  };
+
   const title = useInputValue("");
   const content = useInputValue("");
   const nparticipants = useInputValue("");
@@ -20,18 +34,22 @@ export const PayForm: FC = () => {
   const [error, SetError] = useState("");
   const [existError, SetExistError] = useState(false);
 
+  const [participants] = useParticipantsConstruc(
+    nparticipants.value,
+    amount.value
+  );
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
-    const validate =validateForm()
+    const validate = validateForm();
     setTimeout(() => {
       if (validate) {
-        console.log("validado")
+        console.log("validado");
         setSeending(true);
       }
     }, 1000);
-    setSeending(false)
-    console.log(seending)
+    setSeending(false);
+    console.log(seending);
   };
 
   const validateForm = () => {
@@ -57,10 +75,13 @@ export const PayForm: FC = () => {
     }
     return true;
   };
+
   return (
     <FormContainer>
       <FloattingLogo></FloattingLogo>
-      <Title>${amount.value}</Title>
+      <Title>
+       ${amount.value}
+      </Title>
       <Form onSubmit={handleSubmit}>
         <Input
           placeholder="Title"
@@ -88,6 +109,11 @@ export const PayForm: FC = () => {
         />
         <Button>Add Pay </Button>
         {existError && <Error>{error}</Error>}
+        {participants instanceof Function?<div>loading...</div>:(participants.map((participant) => {
+        return (
+          <Member key={participant.id} {...participant} />
+        );
+      }))}
       </Form>
     </FormContainer>
   );

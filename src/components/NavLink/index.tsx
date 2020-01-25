@@ -8,7 +8,8 @@ export const NavLink = (props:any) => (
         // anchor element's props
         return {
           style: {
-            color: isCurrent ? "rgb(66, 103, 178)" : "#888"
+            color: isCurrent ? "rgb(66, 103, 178)" : "#888",
+          
           }
         };
       }}

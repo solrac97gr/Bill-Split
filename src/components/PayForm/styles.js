@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import { Logo } from "../Logo";
 import {fadeIn} from '../../styles/animation'
+import Slider from "react-input-slider";
+
+export const SliderStyled = styled(Slider)`
+width:100%;
+margin:10px;
+`
 
 export const Form = styled.form`
   display: flex;
