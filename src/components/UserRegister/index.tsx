@@ -4,10 +4,11 @@ import { useInputValue } from "../../hooks/useInputValue";
 
 type UserFormProps = {
   title: string;
-  handleLogin: Function;
+  handleRegister: Function;
 };
 
-export const UserForm: FC<UserFormProps> = (props: UserFormProps) => {
+export const UserRegister: FC<UserFormProps> = (props: UserFormProps) => {
+  const Nickname = useInputValue("");
   const Email = useInputValue("");
   const Password = useInputValue("");
   const [error, setError] = useState("");
@@ -15,7 +16,7 @@ export const UserForm: FC<UserFormProps> = (props: UserFormProps) => {
   const handleSubmit = () => {
     const valid = isValid()
     if (valid) {
-      props.handleLogin(Email.value,Password.value);
+      props.handleRegister(Nickname.value,Email.value,Password.value);
     } else {
       console.log(error);
     }
@@ -30,12 +31,24 @@ export const UserForm: FC<UserFormProps> = (props: UserFormProps) => {
       setError("Password is requiered");
       return false;
     }
+    if(Nickname.value===""){
+      setError("Nickname is requiered");
+      return false;
+    }
     return true;
   }
 
   return (
     <Form>
       <FormTitle>{props.title}</FormTitle>
+      <FormSubtitle>Nickname</FormSubtitle>
+      <Input
+        onChange={Nickname.onChange}
+        value={Nickname.value}
+        type="text"
+        placeholder="freed89"
+        required
+      />
       <FormSubtitle>Email</FormSubtitle>
       <Input
         onChange={Email.onChange}

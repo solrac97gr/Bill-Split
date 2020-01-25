@@ -42,10 +42,12 @@ export const FormContainer = styled.div`
 `;
 
 export const Input = styled.input`
+  font-size:13px;
   padding: 10px;
   margin: 10px 0px;
   border: 2px solid rgb(41, 72, 125);
   border-radius: 20px;
+  word-break: break-word;
   &:focus {
     outline: none;
     border: 2px solid #c9911a;
@@ -53,6 +55,21 @@ export const Input = styled.input`
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
   }
 `;
+
+export const TextArea = styled.textarea`
+font-size:13px;
+padding: 30px 10px;
+  margin: 10px 0px;
+  border: 2px solid rgb(41, 72, 125);
+  border-radius: 20px;
+  word-break: break-word;
+  &:focus {
+    outline: none;
+    border: 2px solid #c9911a;
+    border-radius: 20px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+  }
+`
 export const Button = styled.button`
   background-image: linear-gradient(45deg, rgb(66, 103, 178), rgb(41, 72, 125));
   padding: 10px;
@@ -61,6 +78,7 @@ export const Button = styled.button`
   font-weight: bold;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
   border-left: 10px solid #c9911a;
+  margin-bottom:5px;
   &:hover {
     border-left: 10px solid rgb(41, 72, 125);
   }

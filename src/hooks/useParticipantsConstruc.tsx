@@ -1,8 +1,5 @@
-type Participant = {
-  id: number;
-  participant:string;
-  partofpayment: number;
-};
+import {Participant} from '../models/models'
+
 export const useParticipantsConstruc = (
   nparticipant: number,
   total: number

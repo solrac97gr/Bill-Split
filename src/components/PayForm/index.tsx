@@ -2,12 +2,12 @@ import React, {
   useState,
   FormEvent,
   FunctionComponent as FC,
-  
+  useEffect
 } from "react";
 
 import { useInputValue } from "../../hooks/useInputValue";
 import { useParticipantsConstruc } from "../../hooks/useParticipantsConstruc";
-import {Member} from '../Member'
+import { Member } from "../Member";
 
 import {
   Form,
@@ -17,14 +17,10 @@ import {
   Button,
   FloattingLogo,
   Error,
+  TextArea
 } from "./styles";
 
-export const PayForm: FC = () => {
-  type Participant = {
-    id: number;
-    partofpayment: number;
-  };
-
+export const PayForm: FC<any> = ({ payId, payData }: any) => {
   const title = useInputValue("");
   const content = useInputValue("");
   const nparticipants = useInputValue("");
@@ -76,12 +72,22 @@ export const PayForm: FC = () => {
     return true;
   };
 
+  useEffect(
+    function() {
+      if(payData){
+        title.setValue(payData.title);
+        amount.setValue(payData.amount);
+        content.setValue(payData.content);
+        nparticipants.setValue(payData.nparticipants);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
   return (
     <FormContainer>
       <FloattingLogo></FloattingLogo>
-      <Title>
-       ${amount.value}
-      </Title>
+      <Title>${amount.value}</Title>
       <Form onSubmit={handleSubmit}>
         <Input
           placeholder="Title"
@@ -89,11 +95,10 @@ export const PayForm: FC = () => {
           onChange={title.onChange}
           type="text"
         />
-        <Input
+        <TextArea
           placeholder="Description"
           value={content.value}
           onChange={content.onChange}
-          type="text"
         />
         <Input
           placeholder="Number of participants"
@@ -107,13 +112,15 @@ export const PayForm: FC = () => {
           onChange={amount.onChange}
           type="number"
         />
-        <Button>Add Pay </Button>
+        <Button>{payData?'Edit Pay':'Add Pay'} </Button>
         {existError && <Error>{error}</Error>}
-        {participants instanceof Function?<div>loading...</div>:(participants.map((participant) => {
-        return (
-          <Member key={participant.id} {...participant} />
-        );
-      }))}
+        {participants instanceof Function ? (
+          <div>loading...</div>
+        ) : (
+          participants.map((participant) => {
+            return <Member key={participant.id} {...participant} />;
+          })
+        )}
       </Form>
     </FormContainer>
   );

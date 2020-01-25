@@ -19,11 +19,12 @@ export const PayCard: FC<PayCardProps> = ({
   title,
   created_at,
   amount,
+  nparticipants,
   content
 }: PayCardProps) => {
   const [date_dmy] = useFormatDate(created_at);
   return (
-    <Button to={`/edit/${id}`}>
+    <Button to={`/edit/${id}/${title}/${content}/${nparticipants}/${amount}`}>
       <PayCardStyled>
         <PayCardTitle>{title}</PayCardTitle>
         <Content>{content}</Content>

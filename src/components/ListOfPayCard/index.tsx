@@ -1,8 +1,8 @@
 import React, { FunctionComponent as FC, useState, useEffect } from "react";
-import { PayCard} from "../PayCard";
+import { PayCard } from "../PayCard";
 import { PayCardLoader } from "../PayCardLoader";
 /*Model */
-import {PayCardProps} from '../../models/models'
+import { PayCardProps } from "../../models/models";
 
 type ListOfPayCardProps = {
   data?: PayCardProps[];
@@ -26,8 +26,7 @@ const initialData = [
     author_id: 2,
     created_at: "2020-01-14T18:06:16.615288-05:00",
     updated_at: "2020-01-14T18:06:16.615288-05:00"
-  },
-  
+  }
 ];
 
 export const ListOfPayCard: FC<ListOfPayCardProps> = (
@@ -35,16 +34,24 @@ export const ListOfPayCard: FC<ListOfPayCardProps> = (
 ) => {
   const [pays, setPays] = useState(initialData);
   const [loading, setLoading] = useState(true);
-  useEffect(function() {
-    fetch("https://hip-informatics-265419.appspot.com/pays")
-      .then((r) => r.json())
-      .then((data) => {
-        setPays(data);
-        setLoading(false);
-      })
-      .catch((e) => console.log(e));
-   
-  }, []);
+  const user_id = window.sessionStorage.getItem("id");
+
+  useEffect(
+    function() {
+      if (user_id) {
+        fetch(
+          `https://hip-informatics-265419.appspot.com/paysbyuser/${user_id}`
+        )
+          .then((r) => r.json())
+          .then((data) => {
+            setPays(data);
+            setLoading(false);
+          })
+          .catch((e) => console.log(e));
+      }
+    },
+    [user_id]
+  );
   return (
     <>
       {loading

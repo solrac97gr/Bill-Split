@@ -8,9 +8,16 @@ export const CardMember = styled.div`
   justify-content: space-between;
   text-decoration: none;
   color: white;
-  border-radius: 12px;
+  border-radius: 6px;
   text-align: left;
-  margin: 10px;
+  margin: 5px;
   border-left:20px solid #C9911A;
   padding: 20px;
+`
+export const ParticipantName = styled.span`
+font-size:18px;
+font-weight:700;
+`
+export const Amount = styled.span`
+font-size:18px;
 `

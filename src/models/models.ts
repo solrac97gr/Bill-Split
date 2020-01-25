@@ -18,3 +18,9 @@ export type User = {
     created_at: string;
     updated_at: string;
   };
+
+  export type Participant = {
+    id: number;
+    participant:string;
+    partofpayment: number;
+  };

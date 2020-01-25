@@ -1,11 +1,7 @@
 import React, { FunctionComponent as FC } from "react";
-import { CardMember } from "./styles";
+import { CardMember,ParticipantName,Amount } from "./styles";
+import {Participant} from '../../models/models'
 
-type Participant = {
-  id: number;
-  participant: string;
-  partofpayment: number;
-};
 
 export const Member: FC<Participant> = ({
   id,
@@ -14,8 +10,8 @@ export const Member: FC<Participant> = ({
 }: Participant) => {
   return (
     <CardMember>
-      <span>Participant: {participant}</span>
-      <span>amount: {partofpayment}</span>
+      <ParticipantName>{participant}</ParticipantName>
+      <Amount>${Math.round(partofpayment * 100) / 100}</Amount>
     </CardMember>
   );
 };
