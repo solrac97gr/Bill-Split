@@ -1,12 +1,12 @@
-import styled from "styled-components";
+import styled,{css} from "styled-components";
 import { Logo } from "../Logo";
-import {fadeIn} from '../../styles/animation'
+import { fadeIn } from "../../styles/animation";
 import Slider from "react-input-slider";
 
 export const SliderStyled = styled(Slider)`
-width:100%;
-margin:10px;
-`
+  width: 100%;
+  margin: 10px;
+`;
 
 export const Form = styled.form`
   display: flex;
@@ -42,7 +42,7 @@ export const FormContainer = styled.div`
 `;
 
 export const Input = styled.input`
-  font-size:13px;
+  font-size: 13px;
   padding: 10px;
   margin: 10px 0px;
   border: 2px solid rgb(41, 72, 125);
@@ -57,8 +57,8 @@ export const Input = styled.input`
 `;
 
 export const TextArea = styled.textarea`
-font-size:13px;
-padding: 30px 10px;
+  font-size: 13px;
+  padding: 30px 10px;
   margin: 10px 0px;
   border: 2px solid rgb(41, 72, 125);
   border-radius: 20px;
@@ -69,7 +69,7 @@ padding: 30px 10px;
     border-radius: 20px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
   }
-`
+`;
 export const Button = styled.button`
   background-image: linear-gradient(45deg, rgb(66, 103, 178), rgb(41, 72, 125));
   padding: 10px;
@@ -78,10 +78,17 @@ export const Button = styled.button`
   font-weight: bold;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
   border-left: 10px solid #c9911a;
-  margin-bottom:5px;
+  margin-bottom: 5px;
+  width:100%;
   &:hover {
     border-left: 10px solid rgb(41, 72, 125);
   }
+  ${(props) =>
+    props.warning &&
+    css`
+      background-image: linear-gradient(45deg, #c9911a, #b07f17);
+      border-left: 10px solid rgb(66, 103, 178);
+    `}
 `;
 export const FloattingLogo = styled(Logo)`
   position: absolute;
@@ -95,7 +102,7 @@ export const InputRange = styled.input`
   border: none;
   width: 100%;
   background: transparent;
-  padding:20px;
+  padding: 20px;
   &:-webkit-slider-thumb {
     -webkit-appearance: none;
   }
@@ -141,12 +148,25 @@ export const InputRange = styled.input`
 `;
 
 export const Error = styled.span`
-color: white;
-margin-top:10px;
-padding:10px 0px;
-border-radius:6px;
-width:100%;
+  color: white;
+  margin-top: 10px;
+  padding: 10px 0px;
+  border-radius: 6px;
+  width: 100%;
+  text-align: center;
+  background-image: linear-gradient(45deg, rgb(211, 47, 47), rgb(154, 0, 7));
+  ${fadeIn({ time: "0.1s" })}
+`;
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+export const Separator = styled.div`
+margin-top:3px;
+font-size:3px;
 text-align:center;
-background-image: linear-gradient(45deg, rgb(211, 47, 47), rgb(154, 0, 7));
-${fadeIn({time:"0.1s"})}
+color:white;
+border-top:1px solid #7e7e7e;
+width:100%
 `

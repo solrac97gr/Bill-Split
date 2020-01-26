@@ -2,7 +2,7 @@ import React, { FunctionComponent as FC, useState } from "react";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { UserForm } from "../components/UserForm";
 import { UserRegister } from "../components/UserRegister";
-import { Button } from "../components/UserForm/styles";
+import { Button,LogoutContainer,LogoutText } from "../components/UserForm/styles";
 
 export const Profile: FC<RouteComponentProps> = () => {
   const [isLogin, SetisLogin] = useState(() => {
@@ -89,7 +89,10 @@ export const Profile: FC<RouteComponentProps> = () => {
           <UserRegister title={"Register"} handleRegister={handleRegister} />
         </>
       ) : (
-        <Button onClick={handleLogOut}>Cerrar sesion</Button>
+        <LogoutContainer>
+          <LogoutText>you leave so soon :c</LogoutText>
+          <Button onClick={handleLogOut}>Cerrar sesion</Button>
+        </LogoutContainer>
       )}{" "}
     </div>
   );

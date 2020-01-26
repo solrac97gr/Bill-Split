@@ -39,3 +39,20 @@ export const Button = styled.button`
     border-left: 10px solid rgb(41, 72, 125);
   }
 `;
+
+export const LogoutContainer = styled.div`
+width:100%;
+height: 500px;
+display:flex;
+flex-direction:column;
+text-align:center;
+justify-content:center;
+align-items:center;
+vertical-align:middle;
+`
+export const LogoutText = styled.span`
+color:rgb(41, 72, 125);
+font-size:31px;
+font-weight:600;
+margin:10px;
+`

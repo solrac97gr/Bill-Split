@@ -8,6 +8,7 @@ import React, {
 import { useInputValue } from "../../hooks/useInputValue";
 import { useParticipantsConstruc } from "../../hooks/useParticipantsConstruc";
 import { Member } from "../Member";
+import { BallLoader } from "../BallLoader";
 
 import {
   Form,
@@ -17,8 +18,11 @@ import {
   Button,
   FloattingLogo,
   Error,
-  TextArea
+  TextArea,
+  ButtonContainer,
+  Separator
 } from "./styles";
+import { navigate } from "@reach/router";
 
 export const PayForm: FC<any> = ({ payId, payData }: any) => {
   const title = useInputValue("");
@@ -35,17 +39,13 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
     amount.value
   );
 
+  var author_id = JSON.parse(sessionStorage.getItem("id") || "{}");
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validate = validateForm();
-    setTimeout(() => {
-      if (validate) {
-        console.log("validado");
-        setSeending(true);
-      }
-    }, 1000);
-    setSeending(false);
-    console.log(seending);
+    if (validate) {
+      setSeending(true);
+    }
   };
 
   const validateForm = () => {
@@ -74,7 +74,7 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
 
   useEffect(
     function() {
-      if(payData){
+      if (payData) {
         title.setValue(payData.title);
         amount.setValue(payData.amount);
         content.setValue(payData.content);
@@ -84,6 +84,66 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+  const handlePayActions = () => {
+    setSeending(true);
+    if (payData) {
+      const data = {
+        title: title.value,
+        content: content.value,
+        amount: parseFloat(amount.value),
+        nparticipants: parseInt(nparticipants.value),
+        author_id: parseInt(author_id)
+      };
+      fetch(`https://hip-informatics-265419.appspot.com/pays/${payId}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+          Authorization: `Bearer ${window.sessionStorage.getItem("token")}`
+        }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setSeending(false);
+          navigate("/");
+        });
+    } else {
+      setSeending(true);
+      const data = {
+        title: title.value,
+        content: content.value,
+        amount: parseFloat(amount.value),
+        nparticipants: parseInt(nparticipants.value),
+        author_id: parseInt(author_id)
+      };
+
+      fetch("https://hip-informatics-265419.appspot.com/pays", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          Authorization: `Bearer ${window.sessionStorage.getItem("token")}`
+        }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setSeending(false);
+          navigate("/");
+        });
+    }
+  };
+  const handlePayDelete = () => {
+    setSeending(true);
+    fetch(`https://hip-informatics-265419.appspot.com/pays/${payId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${window.sessionStorage.getItem("token")}`
+      }
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        setSeending(false);
+        navigate("/");
+      });
+  };
   return (
     <FormContainer>
       <FloattingLogo></FloattingLogo>
@@ -112,8 +172,31 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
           onChange={amount.onChange}
           type="number"
         />
-        <Button>{payData?'Edit Pay':'Add Pay'} </Button>
+        {payData ? (
+          <ButtonContainer>
+            {!seending ? (
+              <>
+                <Button onClick={handlePayActions}>Edit Pay</Button>
+                <Button warning onClick={handlePayDelete}>
+                  Delete Pay
+                </Button>
+              </>
+            ) : (
+              <BallLoader />
+            )}
+          </ButtonContainer>
+        ) : (
+          <div>
+            {!seending ? (
+              <Button onClick={handlePayActions}>Add Pay</Button>
+            ) : (
+              <BallLoader />
+            )}
+          </div>
+        )}
+
         {existError && <Error>{error}</Error>}
+        <Separator>test</Separator>
         {participants instanceof Function ? (
           <div>loading...</div>
         ) : (
