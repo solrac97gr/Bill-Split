@@ -6,7 +6,7 @@ import { Button,LogoutContainer,LogoutText } from "../components/UserForm/styles
 
 export const Profile: FC<RouteComponentProps> = () => {
   const [isLogin, SetisLogin] = useState(() => {
-    const token = window.sessionStorage.getItem("token");
+    const token = window.localStorage.getItem("token");
     if (token) {
       return true;
     }
@@ -14,7 +14,8 @@ export const Profile: FC<RouteComponentProps> = () => {
   });
   const handleLogOut = () => {
     SetisLogin(false);
-    window.sessionStorage.removeItem("token");
+    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("id");
     navigate("/", { replace: true });
     window.location.reload();
   };
@@ -31,13 +32,13 @@ export const Profile: FC<RouteComponentProps> = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        sessionStorage.setItem("token", data);
+        localStorage.setItem("token", data);
 
         fetch(`https://hip-informatics-265419.appspot.com/usersemail/${email}`)
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            sessionStorage.setItem("id", data);
+            localStorage.setItem("id", data);
             navigate("/", { replace: true });
             window.location.reload(true);
           });
@@ -64,14 +65,14 @@ export const Profile: FC<RouteComponentProps> = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.id);
-        sessionStorage.setItem("id", data.id);
+        localStorage.setItem("id", data.id);
         fetch("https://hip-informatics-265419.appspot.com/login", {
           method: "POST",
           body: JSON.stringify({ email: email, password: password })
         })
           .then((response) => response.json())
           .then((data) => {
-            sessionStorage.setItem("token", data);
+            localStorage.setItem("token", data);
             navigate("/", { replace: true });
             window.location.reload(true);
           });
@@ -90,8 +91,8 @@ export const Profile: FC<RouteComponentProps> = () => {
         </>
       ) : (
         <LogoutContainer>
-          <LogoutText>you leave so soon :c</LogoutText>
-          <Button onClick={handleLogOut}>Cerrar sesion</Button>
+          <LogoutText>you leave so soon</LogoutText>
+          <Button onClick={handleLogOut}>LogOut</Button>
         </LogoutContainer>
       )}{" "}
     </div>

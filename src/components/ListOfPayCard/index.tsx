@@ -1,40 +1,23 @@
 import React, { FunctionComponent as FC, useState, useEffect } from "react";
 import { PayCard } from "../PayCard";
 import { PayCardLoader } from "../PayCardLoader";
+import {AddPayDiv} from "./styles"
 /*Model */
-import { PayCardProps } from "../../models/models";
+import { Pays } from "../../models/models";
 
 type ListOfPayCardProps = {
-  data?: PayCardProps[];
+  data?: Pays[];
 };
-
-const initialData = [
-  {
-    id: 2,
-    title: "Title 2",
-    content: "Hello world 2",
-    nparticipants: 2,
-    amount: 230,
-    author: {
-      id: 2,
-      nickname: "Martin Luther",
-      email: "luther@gmail.com",
-      password: "$2a$10$7ktj7YMhK6vvXakC4BbFdecf7VaL7g90AQ0BAcx6MIj6OkAZ/NVCi",
-      created_at: "2020-01-14T18:06:16.611835-05:00",
-      updated_at: "2020-01-14T18:06:16.611835-05:00"
-    },
-    author_id: 2,
-    created_at: "2020-01-14T18:06:16.615288-05:00",
-    updated_at: "2020-01-14T18:06:16.615288-05:00"
-  }
-];
+const initialData: Pays[] = [];
+const ArrayX: number[] = [1, 2, 3, 4, 5];
 
 export const ListOfPayCard: FC<ListOfPayCardProps> = (
   props: ListOfPayCardProps
 ) => {
   const [pays, setPays] = useState(initialData);
   const [loading, setLoading] = useState(true);
-  const user_id = window.sessionStorage.getItem("id");
+  const [nodata, setNodata] = useState(false);
+  const user_id = window.localStorage.getItem("id");
 
   useEffect(
     function() {
@@ -42,9 +25,13 @@ export const ListOfPayCard: FC<ListOfPayCardProps> = (
         fetch(
           `https://hip-informatics-265419.appspot.com/paysbyuser/${user_id}`
         )
-          .then((r) => r.json())
-          .then((data) => {
-            setPays(data);
+          .then((r:Response) => r.json())
+          .then((data: Pays[]) => {
+            if (data.length === 0) {
+              setNodata(true);
+            } else {
+              setPays(data);
+            }
             setLoading(false);
           })
           .catch((e) => console.log(e));
@@ -54,9 +41,13 @@ export const ListOfPayCard: FC<ListOfPayCardProps> = (
   );
   return (
     <>
-      {loading
-        ? [1, 2, 3, 4, 5, 6].map((loader) => <PayCardLoader key={loader} />)
-        : pays.map((pay) => <PayCard key={pay.id} {...pay}></PayCard>)}
+      {nodata ? (
+        <AddPayDiv>You don't have payments yet add your first payment.</AddPayDiv>
+      ) : loading ? (
+        ArrayX.map((loader: number) => <PayCardLoader key={loader} />)
+      ) : (
+        pays.map((pay: Pays) => <PayCard key={pay.id} {...pay}></PayCard>)
+      )}
     </>
   );
 };

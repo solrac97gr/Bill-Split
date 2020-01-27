@@ -16,7 +16,7 @@ import { GlobalStyle } from "./styles/GlobalStyles";
 
 const App: React.FC = () => {
   const [isAuth] = useState(() => {
-    const token = window.sessionStorage.getItem("token");
+    const token = window.localStorage.getItem("token");
     if (token) {
       return true;
     }

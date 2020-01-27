@@ -1,20 +1,20 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Form = styled.form`
-display:flex;
-flex-direction:column;
-padding:10px;
-`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+`;
 export const FormTitle = styled.span`
-font-weight:700;
-font-size:34px;
-color:rgb(66, 103, 178);
-`
+  font-weight: 700;
+  font-size: 34px;
+  color: rgb(66, 103, 178);
+`;
 export const FormSubtitle = styled.span`
-font-size:21px;
-color:rgb(66, 103, 178);
-margin:8px 0px;
-`
+  font-size: 21px;
+  color: rgb(66, 103, 178);
+  margin: 8px 0px;
+`;
 export const Input = styled.input`
   padding: 10px;
   margin: 10px 0px;
@@ -41,18 +41,22 @@ export const Button = styled.button`
 `;
 
 export const LogoutContainer = styled.div`
-width:100%;
-height: 500px;
-display:flex;
-flex-direction:column;
-text-align:center;
-justify-content:center;
-align-items:center;
-vertical-align:middle;
-`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1em;
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  left: 50%;
+  margin-left: -50px;
+  top: 50%;
+  margin-top: -50px;
+`;
 export const LogoutText = styled.span`
-color:rgb(41, 72, 125);
-font-size:31px;
-font-weight:600;
-margin:10px;
-`
+  color: rgb(41, 72, 125);
+  font-size: 21px;
+  font-weight: 600;
+  margin: 10px;
+`;
