@@ -13,7 +13,8 @@ export const UserRegister: FC<UserFormProps> = (props: UserFormProps) => {
   const Password = useInputValue("");
   const [error, setError] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
     const valid = isValid()
     if (valid) {
       props.handleRegister(Nickname.value,Email.value,Password.value);

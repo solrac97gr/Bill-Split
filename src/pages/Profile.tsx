@@ -2,7 +2,11 @@ import React, { FunctionComponent as FC, useState } from "react";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { UserForm } from "../components/UserForm";
 import { UserRegister } from "../components/UserRegister";
-import { Button,LogoutContainer,LogoutText } from "../components/UserForm/styles";
+import {
+  Button,
+  LogoutContainer,
+  LogoutText
+} from "../components/UserForm/styles";
 
 export const Profile: FC<RouteComponentProps> = () => {
   const [isLogin, SetisLogin] = useState(() => {
@@ -21,7 +25,6 @@ export const Profile: FC<RouteComponentProps> = () => {
   };
 
   const handleLogin = (email: string, password: string) => {
-    SetisLogin(!isLogin);
     const data = {
       email: email,
       password: password
@@ -32,19 +35,35 @@ export const Profile: FC<RouteComponentProps> = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        localStorage.setItem("token", data);
-
-        fetch(`https://hip-informatics-265419.appspot.com/usersemail/${email}`)
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            localStorage.setItem("id", data);
-            navigate("/", { replace: true });
-            window.location.reload(true);
-          });
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          localStorage.setItem("token", data);
+          fetch(
+            `https://hip-informatics-265419.appspot.com/usersemail/${email}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              if (data.error) {
+                console.log(data.error);
+              } else {
+                localStorage.setItem("id", data);
+                navigate("/", { replace: true });
+                window.location.reload(true);
+                SetisLogin(true);
+              }
+            })
+            .catch((error) => {
+              localStorage.removeItem("id");
+              localStorage.removeItem("token");
+            });
+        }
       })
       .catch((error) => {
         console.log(error);
+        localStorage.removeItem("token");
+        localStorage.removeItem("id");
       });
   };
   const handleRegister = (
@@ -52,7 +71,6 @@ export const Profile: FC<RouteComponentProps> = () => {
     email: string,
     password: string
   ) => {
-    SetisLogin(!isLogin);
     const data = {
       nickname: nickname,
       email: email,
@@ -64,21 +82,35 @@ export const Profile: FC<RouteComponentProps> = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.id);
-        localStorage.setItem("id", data.id);
-        fetch("https://hip-informatics-265419.appspot.com/login", {
-          method: "POST",
-          body: JSON.stringify({ email: email, password: password })
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            localStorage.setItem("token", data);
-            navigate("/", { replace: true });
-            window.location.reload(true);
-          });
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          console.log(data.id);
+          localStorage.setItem("id", data.id);
+          fetch("https://hip-informatics-265419.appspot.com/login", {
+            method: "POST",
+            body: JSON.stringify({ email: email, password: password })
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.error) {
+                console.log(data.error);
+              } else {
+                localStorage.setItem("token", data);
+                SetisLogin(true);
+                navigate("/", { replace: true });
+                window.location.reload(true);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              localStorage.removeItem("token");
+            });
+        }
       })
       .catch((error) => {
         console.log(error);
+        localStorage.removeItem("token");
       });
   };
   return (
