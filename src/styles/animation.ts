@@ -10,7 +10,11 @@ const FadeInKeyFramse = keyframes`
     opacity:1;
   }
 `
-export const fadeIn = ({ time = '1s', type = 'ease' } = {}) => css`
+interface IFadeInProps{
+  time?:string;
+  type?:string;
+}
+export const fadeIn = ({ time = '1s', type = 'ease' } = {}) => css<IFadeInProps>`
   animation: ${time} ${FadeInKeyFramse} ${type};
 `
 const scaleDown = keyframes`
@@ -21,8 +25,12 @@ const scaleDown = keyframes`
       transform:scale(0.5);
     }
 `
+interface IScaleProps{
+  time?:string;
+  type?:string;
+}
 export const scale = ({ time = '1s', type = 'ease' } = {}) =>
-  css`
+  css<IScaleProps>`
     animation: ${time} ${scaleDown} ${type};
   `
 const placeHolderShimmer = keyframes`
@@ -33,6 +41,15 @@ const placeHolderShimmer = keyframes`
         background-position: 490px 0
     }
 `
+interface ISkeletonAnimationProps{
+  time?:string;
+  fill?:string;
+  iteration?:string;
+  timingFunction?:string;
+  colorBackground?:string;
+  colorAnimation?:string;
+}
+
 export const skeletonAnimation = ({
   time = '2s',
   fill = 'forwards',
@@ -41,7 +58,7 @@ export const skeletonAnimation = ({
   colorBackground = '#edeef1',
   colorAnimation =  '#f6f7f8'
 } = {}) =>
-  css`
+  css<ISkeletonAnimationProps>`
     animation-duration: ${time};
     animation-fill-mode: ${fill};
     animation-iteration-count: ${iteration};

@@ -7,7 +7,7 @@ type UserFormProps = {
   handleRegister: Function;
 };
 
-export const UserRegister: FC<UserFormProps> = (props: UserFormProps) => {
+export const UserRegister: FC<UserFormProps> = ({title,handleRegister}: UserFormProps) => {
   const Nickname = useInputValue("");
   const Email = useInputValue("");
   const Password = useInputValue("");
@@ -17,7 +17,7 @@ export const UserRegister: FC<UserFormProps> = (props: UserFormProps) => {
     e.preventDefault();
     const valid = isValid()
     if (valid) {
-      props.handleRegister(Nickname.value,Email.value,Password.value);
+      handleRegister(Nickname.value,Email.value,Password.value);
     } else {
       console.log(error);
     }
@@ -41,7 +41,7 @@ export const UserRegister: FC<UserFormProps> = (props: UserFormProps) => {
 
   return (
     <Form>
-      <FormTitle>{props.title}</FormTitle>
+      <FormTitle>{title}</FormTitle>
       <FormSubtitle>Nickname</FormSubtitle>
       <Input
         onChange={Nickname.onChange}
@@ -66,7 +66,7 @@ export const UserRegister: FC<UserFormProps> = (props: UserFormProps) => {
         placeholder="minimun 7 characters include numnbers"
         required
       />
-      <Button onClick={handleSubmit}>{props.title}</Button>
+      <Button onClick={handleSubmit}>{title}</Button>
     </Form>
   );
 };

@@ -1,5 +1,5 @@
-export function useFormatDate(date: string) {
-  var d = new Date(date),
+export function useFormatDate(date: string):String[] {
+  var d:Date = new Date(date),
     month = "" + (d.getMonth() + 1),
     day = "" + d.getDate(),
     year = d.getFullYear();

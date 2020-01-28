@@ -7,7 +7,7 @@ type UserFormProps = {
   handleLogin: Function;
 };
 
-export const UserForm: FC<UserFormProps> = (props: UserFormProps) => {
+export const UserForm: FC<UserFormProps> = ({title,handleLogin}: UserFormProps) => {
   const Email = useInputValue("");
   const Password = useInputValue("");
   const [error, setError] = useState("");
@@ -16,7 +16,7 @@ export const UserForm: FC<UserFormProps> = (props: UserFormProps) => {
     e.preventDefault();
     const valid = isValid()
     if (valid) {
-      props.handleLogin(Email.value,Password.value);
+      handleLogin(Email.value,Password.value);
     } else {
       console.log(error);
     }
@@ -36,7 +36,7 @@ export const UserForm: FC<UserFormProps> = (props: UserFormProps) => {
 
   return (
     <Form>
-      <FormTitle>{props.title}</FormTitle>
+      <FormTitle>{title}</FormTitle>
       <FormSubtitle>Email</FormSubtitle>
       <Input
         onChange={Email.onChange}
@@ -53,7 +53,7 @@ export const UserForm: FC<UserFormProps> = (props: UserFormProps) => {
         placeholder="minimun 7 characters include numnbers"
         required
       />
-      <Button onClick={handleSubmit}>{props.title}</Button>
+      <Button onClick={handleSubmit}>{title}</Button>
     </Form>
   );
 };

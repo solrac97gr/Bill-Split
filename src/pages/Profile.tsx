@@ -9,6 +9,7 @@ import {
 } from "../components/UserForm/styles";
 
 export const Profile: FC<RouteComponentProps> = () => {
+  const [errordata, SetErrorData] = useState("");
   const [isLogin, SetisLogin] = useState(() => {
     const token = window.localStorage.getItem("token");
     if (token) {
@@ -37,6 +38,7 @@ export const Profile: FC<RouteComponentProps> = () => {
       .then((data) => {
         if (data.error) {
           console.log(data.error);
+          SetErrorData(data.error);
         } else {
           localStorage.setItem("token", data);
           fetch(
@@ -47,6 +49,7 @@ export const Profile: FC<RouteComponentProps> = () => {
               console.log(data);
               if (data.error) {
                 console.log(data.error);
+                SetErrorData(data.error);
               } else {
                 localStorage.setItem("id", data);
                 navigate("/", { replace: true });
@@ -84,6 +87,7 @@ export const Profile: FC<RouteComponentProps> = () => {
       .then((data) => {
         if (data.error) {
           console.log(data.error);
+          SetErrorData(data.error);
         } else {
           console.log(data.id);
           localStorage.setItem("id", data.id);
@@ -95,6 +99,7 @@ export const Profile: FC<RouteComponentProps> = () => {
             .then((data) => {
               if (data.error) {
                 console.log(data.error);
+                SetErrorData(data.error);
               } else {
                 localStorage.setItem("token", data);
                 SetisLogin(true);
@@ -119,11 +124,12 @@ export const Profile: FC<RouteComponentProps> = () => {
       {!isLogin ? (
         <>
           <UserForm title={"Login"} handleLogin={handleLogin} />
+          {errordata.length > 0 && <div>{errordata}</div>}
           <UserRegister title={"Register"} handleRegister={handleRegister} />
         </>
       ) : (
         <LogoutContainer>
-          <LogoutText>you leave so soon</LogoutText>
+          <LogoutText>Bye!</LogoutText>
           <Button onClick={handleLogOut}>LogOut</Button>
         </LogoutContainer>
       )}{" "}

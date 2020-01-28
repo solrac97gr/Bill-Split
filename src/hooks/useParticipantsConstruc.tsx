@@ -1,4 +1,4 @@
-import {Participant} from '../models/models'
+import { Participant } from "../models/models";
 
 export const useParticipantsConstruc = (
   nparticipant: number,
@@ -9,8 +9,8 @@ export const useParticipantsConstruc = (
   const participants: Participant[] = [];
   for (var i = 0; i < nparticipant; i++) {
     participants.push({
-      id: i+1,
-      participant:`Participant ${i+1}`,
+      id: i + 1,
+      participant: `Participant ${i + 1}`,
       partofpayment: initialpart
     });
   }

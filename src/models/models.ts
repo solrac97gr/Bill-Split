@@ -20,9 +20,9 @@ export type User = {
   };
 
   export type Participant = {
-    id: number;
-    participant:string;
-    partofpayment: number;
+    id?: number;
+    participant?:string;
+    partofpayment?: number;
   };
 
   export type Pays = {

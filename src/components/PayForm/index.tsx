@@ -39,7 +39,7 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
     amount.value
   );
 
-  var author_id = JSON.parse(sessionStorage.getItem("id") || "{}");
+  var author_id = JSON.parse(localStorage.getItem("id") || "{}");
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validate = validateForm();
@@ -98,7 +98,7 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
         method: "PUT",
         body: JSON.stringify(data),
         headers: {
-          Authorization: `Bearer ${window.sessionStorage.getItem("token")}`
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`
         }
       })
         .then((response) => response.json())
@@ -120,7 +120,7 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
-          Authorization: `Bearer ${window.sessionStorage.getItem("token")}`
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`
         }
       })
         .then((response) => response.json())
@@ -135,7 +135,7 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
     fetch(`https://hip-informatics-265419.appspot.com/pays/${payId}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${window.sessionStorage.getItem("token")}`
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`
       }
     })
       .then((response) => response.text())
