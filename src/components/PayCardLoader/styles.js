@@ -15,7 +15,7 @@ padding:20px;
 margin:10px;
 border-radius:12px;
 color:transparent;
-
+width:100%;
 `
 export const Resumen = styled.span`
 margin:5px 0px;

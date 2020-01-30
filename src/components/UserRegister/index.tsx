@@ -1,4 +1,4 @@
-import React, { FunctionComponent as FC,useState } from "react";
+import React, { FunctionComponent as FC, useState } from "react";
 import { Form, FormTitle, FormSubtitle, Input, Button } from "./styles";
 import { useInputValue } from "../../hooks/useInputValue";
 
@@ -7,23 +7,23 @@ type UserFormProps = {
   handleRegister: Function;
 };
 
-export const UserRegister: FC<UserFormProps> = ({title,handleRegister}: UserFormProps) => {
+export const UserRegister: FC<UserFormProps> = ({
+  title,
+  handleRegister
+}: UserFormProps) => {
   const Nickname = useInputValue("");
   const Email = useInputValue("");
   const Password = useInputValue("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    const valid = isValid()
-    if (valid) {
-      handleRegister(Nickname.value,Email.value,Password.value);
-    } else {
-      console.log(error);
-    }
+    isValid();
+    handleRegister(Nickname.value, Email.value, Password.value, error);
   };
 
   function isValid() {
+    console.log("validando");
     if (Email.value === "") {
       setError("Email is requiered");
       return false;
@@ -32,8 +32,17 @@ export const UserRegister: FC<UserFormProps> = ({title,handleRegister}: UserForm
       setError("Password is requiered");
       return false;
     }
-    if(Nickname.value===""){
+    if (Nickname.value === "") {
       setError("Nickname is requiered");
+      return false;
+    }
+    var mediumRegex = new RegExp(
+      "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{7,})"
+    );
+    if (mediumRegex.test(Password.value)) {
+      setError(
+        "Password must contain at least 1 lowercase,1 Uppercase,number and 7 characters"
+      );
       return false;
     }
     return true;

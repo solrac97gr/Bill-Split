@@ -1,7 +1,7 @@
 import React, { FunctionComponent as FC, useState, useEffect } from "react";
 import { PayCard } from "../PayCard";
 import { PayCardLoader } from "../PayCardLoader";
-import {AddPayDiv} from "./styles"
+import { AddPayDiv,ListOfLoaders,ListOfPaycardsStyled } from "./styles";
 /*Model */
 import { Pays } from "../../models/models";
 
@@ -25,7 +25,7 @@ export const ListOfPayCard: FC<ListOfPayCardProps> = (
         fetch(
           `https://hip-informatics-265419.appspot.com/paysbyuser/${user_id}`
         )
-          .then((r:Response) => r.json())
+          .then((r: Response) => r.json())
           .then((data: Pays[]) => {
             if (data.length === 0) {
               setNodata(true);
@@ -40,14 +40,25 @@ export const ListOfPayCard: FC<ListOfPayCardProps> = (
     [user_id]
   );
   return (
-    <>
+    <div>
       {nodata ? (
-        <AddPayDiv>You don't have payments yet add your first payment.</AddPayDiv>
+        <AddPayDiv>
+          You don't have payments yet add your first payment.
+        </AddPayDiv>
       ) : loading ? (
-        ArrayX.map((loader: number) => <PayCardLoader key={loader} />)
+        <ListOfLoaders>
+          {ArrayX.map((loader: number) => (
+            <li  key={loader}>
+              <PayCardLoader key={loader} />
+            </li>
+          ))}
+        </ListOfLoaders>
       ) : (
-        pays.map((pay: Pays) => <PayCard key={pay.id} {...pay}></PayCard>)
+        <ListOfPaycardsStyled>
+          {pays.map((pay: Pays) => <li key={pay.id} ><PayCard key={pay.id} {...pay}></PayCard></li>)}
+        </ListOfPaycardsStyled>
+        
       )}
-    </>
+    </div>
   );
 };

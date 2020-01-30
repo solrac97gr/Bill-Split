@@ -7,6 +7,7 @@ export const PayCard = styled.div`
   padding: 20px;
   margin: 5px;
   border-radius: 12px;
+ width:100%;
 `;
 export const Button = styled(Link)`
   display: flex;

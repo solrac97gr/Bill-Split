@@ -42,8 +42,7 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
   var author_id = JSON.parse(localStorage.getItem("id") || "{}");
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validate = validateForm();
-    if (validate) {
+    if (validateForm()) {
       setSeending(true);
     }
   };
@@ -59,13 +58,38 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
       SetExistError(true);
       return false;
     }
+    if (title.value.length >= 200 && !payData) {
+      SetError("Max number of character in title 100");
+      SetExistError(true);
+      return false;
+    }
+    if (content.value.length >= 200) {
+      SetError("Max number of character in description 200");
+      SetExistError(true);
+      return false;
+    }
     if (nparticipants.value === "") {
       SetError("Add the number of participants");
       SetExistError(true);
       return false;
     }
+    if (nparticipants.value > 20) {
+      SetError("Max number of participants 20");
+      SetExistError(true);
+      return false;
+    }
     if (amount.value === "") {
       SetError("Add a valid amount");
+      SetExistError(true);
+      return false;
+    }
+    if(amount.value>100000){
+      SetError("Max amount 100 000");
+      SetExistError(true);
+      return false;
+    }
+    if(amount.value<=0){
+      SetError("Min amount 1");
       SetExistError(true);
       return false;
     }
@@ -85,64 +109,68 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
     []
   );
   const handlePayActions = () => {
-    setSeending(true);
-    if (payData) {
-      const data = {
-        title: title.value,
-        content: content.value,
-        amount: parseFloat(amount.value),
-        nparticipants: parseInt(nparticipants.value),
-        author_id: parseInt(author_id)
-      };
-      fetch(`https://hip-informatics-265419.appspot.com/pays/${payId}`, {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`
-        }
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setSeending(false);
-          navigate("/");
-        });
-    } else {
+    if (validateForm()) {
       setSeending(true);
-      const data = {
-        title: title.value,
-        content: content.value,
-        amount: parseFloat(amount.value),
-        nparticipants: parseInt(nparticipants.value),
-        author_id: parseInt(author_id)
-      };
+      if (payData) {
+        const data = {
+          title: title.value,
+          content: content.value,
+          amount: parseFloat(amount.value),
+          nparticipants: parseInt(nparticipants.value),
+          author_id: parseInt(author_id)
+        };
+        fetch(`https://hip-informatics-265419.appspot.com/pays/${payId}`, {
+          method: "PUT",
+          body: JSON.stringify(data),
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`
+          }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setSeending(false);
+            navigate("/");
+          });
+      } else {
+        setSeending(true);
+        const data = {
+          title: title.value,
+          content: content.value,
+          amount: parseFloat(amount.value),
+          nparticipants: parseInt(nparticipants.value),
+          author_id: parseInt(author_id)
+        };
 
-      fetch("https://hip-informatics-265419.appspot.com/pays", {
-        method: "POST",
-        body: JSON.stringify(data),
+        fetch("https://hip-informatics-265419.appspot.com/pays", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`
+          }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setSeending(false);
+            navigate("/");
+          });
+      }
+    }
+  };
+  const handlePayDelete = () => {
+    if (validateForm()) {
+      setSeending(true);
+      fetch(`https://hip-informatics-265419.appspot.com/pays/${payId}`, {
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`
         }
       })
-        .then((response) => response.json())
+        .then((response) => response.text())
         .then((data) => {
           setSeending(false);
           navigate("/");
         });
     }
-  };
-  const handlePayDelete = () => {
-    setSeending(true);
-    fetch(`https://hip-informatics-265419.appspot.com/pays/${payId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${window.localStorage.getItem("token")}`
-      }
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        setSeending(false);
-        navigate("/");
-      });
   };
   return (
     <FormContainer>
@@ -150,24 +178,25 @@ export const PayForm: FC<any> = ({ payId, payData }: any) => {
       <Title>${amount.value}</Title>
       <Form onSubmit={handleSubmit}>
         <Input
-          placeholder="Title"
+          placeholder="Title (Max 100)"
           value={title.value}
           onChange={title.onChange}
           type="text"
         />
         <TextArea
-          placeholder="Description"
+          maxlength="200"
+          placeholder="Description (Max 200)"
           value={content.value}
           onChange={content.onChange}
         />
         <Input
-          placeholder="Number of participants"
+          placeholder="Number of participants (Max 20)"
           value={nparticipants.value}
           onChange={nparticipants.onChange}
           type="number"
         />
         <Input
-          placeholder="Amount in Dollars"
+          placeholder="Amount in Dollars (Max $100000)"
           value={amount.value}
           onChange={amount.onChange}
           type="number"

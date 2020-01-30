@@ -1,4 +1,4 @@
-import styled,{css} from "styled-components";
+import styled, { css } from "styled-components";
 import { Logo } from "../Logo";
 import { fadeIn } from "../../styles/animation";
 import Slider from "react-input-slider";
@@ -34,11 +34,20 @@ export const Title = styled.div`
     left: 0;
     top: 0;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+    @media only screen and (min-width: 600px) {
+      left: 37%;
+    }
   }
 `;
 
 export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 0px;
+  justify-content: space-around;
+  left: 0;
+  margin: 0 auto;
+  max-width: 500px;
 `;
 
 export const Input = styled.input`
@@ -58,7 +67,7 @@ export const Input = styled.input`
 
 export const TextArea = styled.textarea`
   font-size: 13px;
-  height:100px;
+  height: 100px;
   padding: 10px;
   margin: 10px 0px;
   border: 2px solid rgb(41, 72, 125);
@@ -80,7 +89,7 @@ export const Button = styled.button`
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
   border-left: 10px solid #c9911a;
   margin-bottom: 5px;
-  width:100%;
+  width: 100%;
   &:hover {
     border-left: 10px solid rgb(41, 72, 125);
   }
@@ -97,6 +106,10 @@ export const FloattingLogo = styled(Logo)`
   left: 0;
   width: 100px;
   z-index: 9999;
+  @media only screen and (min-width: 600px) {
+      left: 37%;
+    
+  }
 `;
 
 export const InputRange = styled.input`
@@ -164,10 +177,10 @@ export const ButtonContainer = styled.div`
   justify-content: space-evenly;
 `;
 export const Separator = styled.div`
-margin-top:3px;
-font-size:3px;
-text-align:center;
-color:white;
-border-top:1px solid #7e7e7e;
-width:100%
-`
+  margin-top: 3px;
+  font-size: 3px;
+  text-align: center;
+  color: white;
+  border-top: 1px solid #eeeeee;
+  width: 100%;
+`;

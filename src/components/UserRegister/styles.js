@@ -4,6 +4,11 @@ export const Form = styled.form`
 display:flex;
 flex-direction:column;
 padding:10px;
+max-width:500px;
+
+justify-content: space-around;
+  left: 0;
+  margin: 0 auto;
 `
 export const FormTitle = styled.span`
 font-weight:700;

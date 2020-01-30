@@ -16,7 +16,7 @@ export const UserForm: FC<UserFormProps> = ({title,handleLogin}: UserFormProps) 
     e.preventDefault();
     const valid = isValid()
     if (valid) {
-      handleLogin(Email.value,Password.value);
+      handleLogin(Email.value,Password.value,error);
     } else {
       console.log(error);
     }
@@ -27,6 +27,7 @@ export const UserForm: FC<UserFormProps> = ({title,handleLogin}: UserFormProps) 
       setError("Email is requiered");
       return false;
     }
+    
     if (Password.value === "") {
       setError("Password is requiered");
       return false;
